@@ -24,6 +24,24 @@ public class ProductService {
                 .toList();
     }
 
+    public ProductResponseDTO getProductByInternalCode(String codigoInterno) throws Exception{
+        try{
+            return productRepository
+                    .findAll()
+                    .stream()
+                    .filter(product -> product.getCodigoInterno().equalsIgnoreCase(codigoInterno))
+                    .map(product -> new ProductResponseDTO(product))
+                    .findFirst()
+                    .get();
+        }
+        catch(Exception e){
+            throw new Exception("Produto não cadastrado", e);
+        }
+
+
+    }
+
+
         // Post
     public void addProduct(ProductRequestDTO productRequestDTO){
         Product productAdd = new Product(productRequestDTO);

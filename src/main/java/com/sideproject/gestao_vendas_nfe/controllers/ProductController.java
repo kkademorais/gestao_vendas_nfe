@@ -27,6 +27,11 @@ public class ProductController {
     }
 
 
+    @GetMapping("/{codigo_interno}")
+    public ResponseEntity<ProductResponseDTO> getProductByInternalCode(@PathVariable(name = "codigo_interno") String codigoInterno) throws Exception{
+        return ResponseEntity.ok(this.productService.getProductByInternalCode(codigoInterno));
+    }
+
 
     @PostMapping
     public ResponseEntity addProduct(@RequestBody @Valid ProductRequestDTO productRequestDTO){
