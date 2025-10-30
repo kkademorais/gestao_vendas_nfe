@@ -4,6 +4,9 @@ import com.sideproject.gestao_vendas_nfe.domain.product.ProductRequestDTO;
 import com.sideproject.gestao_vendas_nfe.domain.product.ProductResponseDTO;
 import com.sideproject.gestao_vendas_nfe.services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +21,18 @@ public class ProductController {
     public ProductController(ProductService productService){this.productService = productService;}
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getProductsList(){return ResponseEntity.ok(this.productService.getProductsList());}
+    public ResponseEntity<List<ProductResponseDTO>> getProductsList(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "5") int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("nome"));
+        return ResponseEntity.ok(this.productService.getProductsList(pageable));
+    }
+
+
 
     @PostMapping
     public ResponseEntity addProduct(@RequestBody @Valid ProductRequestDTO productRequestDTO){
         this.productService.addProduct(productRequestDTO);
         return ResponseEntity.ok().build();
     }
+
 
 }

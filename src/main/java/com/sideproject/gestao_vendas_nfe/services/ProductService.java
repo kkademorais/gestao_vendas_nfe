@@ -4,6 +4,7 @@ import com.sideproject.gestao_vendas_nfe.domain.product.Product;
 import com.sideproject.gestao_vendas_nfe.domain.product.ProductRequestDTO;
 import com.sideproject.gestao_vendas_nfe.domain.product.ProductResponseDTO;
 import com.sideproject.gestao_vendas_nfe.repositories.ProductRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public class ProductService {
     public ProductService(ProductRepository productRepository){this.productRepository = productRepository;}
 
         // Get
-    public List<ProductResponseDTO> getProductsList(){
+    public List<ProductResponseDTO> getProductsList(Pageable pageable){
         return productRepository
-                .findAll()
+                .findAll(pageable)
                 .stream()
                 .map(product -> new ProductResponseDTO(product))
                 .toList();
