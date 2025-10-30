@@ -3,11 +3,9 @@ package com.sideproject.gestao_vendas_nfe.controllers;
 import com.sideproject.gestao_vendas_nfe.domain.product.ProductRequestDTO;
 import com.sideproject.gestao_vendas_nfe.domain.product.ProductResponseDTO;
 import com.sideproject.gestao_vendas_nfe.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDTO>> getProductsList(){return ResponseEntity.ok(this.productService.getProductsList());}
 
     @PostMapping
-    public ResponseEntity addProduct(ProductRequestDTO productRequestDTO){
+    public ResponseEntity addProduct(@RequestBody @Valid ProductRequestDTO productRequestDTO){
         this.productService.addProduct(productRequestDTO);
         return ResponseEntity.ok().build();
     }
