@@ -68,14 +68,19 @@ public class ProductService {
         }
     }
 
-    public void deleteProductByInternalCode(String codigoInterno){
-        Product productDelete = this.productRepository
-                                        .findAll()
-                                        .stream()
-                                        .filter(product -> product.getCodigoInterno().equalsIgnoreCase(codigoInterno))
-                                        .findFirst()
-                                        .get();
-        this.productRepository.delete(productDelete);
+    public void deleteProductByInternalCode(String codigoInterno) throws Exception{
+       try{
+           Product productDelete = this.productRepository
+                   .findAll()
+                   .stream()
+                   .filter(product -> product.getCodigoInterno().equalsIgnoreCase(codigoInterno))
+                   .findFirst()
+                   .get();
+           this.productRepository.delete(productDelete);
+       }
+       catch (Exception e){
+           throw new Exception("Produto não encontrado ", e);
+       }
     }
 
 

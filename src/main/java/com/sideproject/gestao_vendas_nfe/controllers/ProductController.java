@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @DeleteMapping("{codigo_interno}")
-    public ResponseEntity deleteProductByInternalCode(@PathVariable(name = "codigo_interno") String codigoInterno){
+    public ResponseEntity deleteProductByInternalCode(@PathVariable(name = "codigo_interno") String codigoInterno) throws Exception{
         this.productService.deleteProductByInternalCode(codigoInterno);
         return ResponseEntity.ok().build();
     }
