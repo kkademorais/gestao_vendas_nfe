@@ -39,5 +39,18 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{codigo_interno}")
+    public ResponseEntity updateProductByInternalCode(@PathVariable(name = "codigo_interno") String codigoInterno, @RequestBody ProductRequestDTO productRequestDTO) throws Exception{
+        this.productService.updateProductByInternalCode(codigoInterno, productRequestDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("{codigo_interno}")
+    public ResponseEntity deleteProductByInternalCode(@PathVariable(name = "codigo_interno") String codigoInterno){
+        this.productService.deleteProductByInternalCode(codigoInterno);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }

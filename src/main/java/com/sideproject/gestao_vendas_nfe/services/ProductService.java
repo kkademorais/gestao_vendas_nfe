@@ -37,8 +37,6 @@ public class ProductService {
         catch(Exception e){
             throw new Exception("Produto não cadastrado", e);
         }
-
-
     }
 
 
@@ -48,5 +46,37 @@ public class ProductService {
         productAdd.setValor(productAdd.getPrecoUnitario() * productAdd.getQuantidade());
         this.productRepository.save(productAdd);
     }
+
+        // Put
+    public void updateProductByInternalCode(String codigoInterno, ProductRequestDTO productRequestDTO) throws Exception{
+        try{
+            Product productUpdate = new Product(productRequestDTO);
+            productUpdate.setId(
+                    this.productRepository
+                            .findAll()
+                            .stream()
+                            .filter(product -> product.getCodigoInterno().equalsIgnoreCase(codigoInterno))
+                            .findFirst()
+                            .get()
+                            .getId()
+            );
+            productUpdate.setValor(productRequestDTO.precoUnitario() * productRequestDTO.quantidade());
+            this.productRepository.save(productUpdate);
+        }
+        catch (Exception e){
+            throw new Exception("Produto não encontrado", e);
+        }
+    }
+
+    public void deleteProductByInternalCode(String codigoInterno){
+        Product productDelete = this.productRepository
+                                        .findAll()
+                                        .stream()
+                                        .filter(product -> product.getCodigoInterno().equalsIgnoreCase(codigoInterno))
+                                        .findFirst()
+                                        .get();
+        this.productRepository.delete(productDelete);
+    }
+
 
 }
