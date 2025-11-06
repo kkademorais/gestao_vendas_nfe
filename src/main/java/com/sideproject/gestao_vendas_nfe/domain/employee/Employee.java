@@ -34,7 +34,7 @@ public class Employee implements UserDetails {
     }
     public Employee(){}
 
-    public Employee(EmployeeRequestDTO employeeRequestDTO){
+    public Employee(EmployeeRequestLoginDTO employeeRequestDTO){
 
     }
 
