@@ -1,29 +1,18 @@
 package com.sideproject.gestao_vendas_nfe.domain.employee;
 
-/*
-- id: Long
-- nome: String (obrigatório)
-- email: String (obrigatório, único)
-- senha: String (obrigatório) — armazenar de forma segura (hash)
-- perfil: Enum (ex: ADMIN, VENDEDOR)
-*/
-
-/*
-**Regras/validações**:
-
-        - email deve ter formato válido, não duplicado
-- senha com política mínima (ex: tamanho mínimo)
-- perfil controlado por Enum
-- rotas protegidas por perfil usando Spring Security + JWT
-*/
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Table(name = "employees")
 @Entity(name = "employees")
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -73,5 +62,45 @@ public class Employee {
                 ", senha='" + senha + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == EmployeeRole.ADMIN){
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_VENDEDOR"));
+        }
+        else{
+            return List.of(new SimpleGrantedAuthority("ROLE_VENDEDOR"));
+        }
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha; // Inserir password hasheada
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nome;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired(); // True
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked(); //True
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired(); // True
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled(); // True
     }
 }
