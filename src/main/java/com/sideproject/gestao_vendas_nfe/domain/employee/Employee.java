@@ -18,19 +18,19 @@ public class Employee implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @NotBlank
-    private String nome;
-    @NotBlank
     private String email;
     @NotBlank
-    private String senha;
+    private String nome;
     @NotNull
     private EmployeeRole role;
+    @NotBlank
+    private String senha;
 
-    public Employee(String nome, String email, String senha, EmployeeRole role){
-        this.nome = nome;
+    public Employee(String email, String nome, EmployeeRole role, String senha){
         this.email = email;
-        this.senha = senha;
+        this.nome = nome;
         this.role = role;
+        this.senha = senha;
     }
     public Employee(){}
 

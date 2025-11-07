@@ -16,9 +16,11 @@ public class EmployeeDetailsService implements UserDetailsService {
         this.employeeRepository = employeeRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return employeeRepository.findByNome(login);
+    public EmployeeRepository getEmployeeRepository() {return employeeRepository;}
+
+        @Override
+    public UserDetails loadUserByUsername(String nome) throws UsernameNotFoundException {
+        return employeeRepository.findByNome(nome);
     }
 
     public void registerNewUser(Employee employeeRegister){
