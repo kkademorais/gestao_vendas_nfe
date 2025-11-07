@@ -34,9 +34,6 @@ public class Employee implements UserDetails {
     }
     public Employee(){}
 
-    public Employee(EmployeeRequestLoginDTO employeeRequestDTO){
-
-    }
 
     public String getId() {return id;}
     public void setId(String id) {this.id = id;}

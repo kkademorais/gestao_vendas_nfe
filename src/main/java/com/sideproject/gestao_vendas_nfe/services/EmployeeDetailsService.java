@@ -1,5 +1,6 @@
 package com.sideproject.gestao_vendas_nfe.services;
 
+import com.sideproject.gestao_vendas_nfe.domain.employee.Employee;
 import com.sideproject.gestao_vendas_nfe.repositories.EmployeeRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,10 @@ public class EmployeeDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return employeeRepository.findByLogin(login);
+        return employeeRepository.findByNome(login);
+    }
+
+    public void registerNewUser(Employee employeeRegister){
+        this.employeeRepository.save(employeeRegister);
     }
 }

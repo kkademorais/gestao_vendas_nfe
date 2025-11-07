@@ -10,5 +10,5 @@ import org.springframework.security.core.userdetails.UserDetails;
         // T2 = TipoPrimitivo do ID
 //@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
-    UserDetails findByLogin(String login);
+    UserDetails findByNome(String nome);
 }
